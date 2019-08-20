@@ -16,7 +16,7 @@
 #' @examples  # Using fips
 #' @examples  test <- get_infousa_location(2006, "01001")
 #' @examples  test <- get_infousa_location(2006, "02020", tract=c(001802,002900))
-#' @examples   
+#'
 #' @examples  # Using state and county names
 #' @examples  x <- data.frame(state=c('il'), county=c('champaign'))
 #' @examples  test <- get_infousa_location(2017, x, method="names")
@@ -45,7 +45,7 @@ get_infousa_location <- function(single_year, loc, tract="*", columns="*", metho
     print("Invalid method!")
     return(NULL)
   }
-  
+
   # state_county$county_code <- as.integer(state_county$county_code)
 
   # Initialize tract specification
@@ -55,7 +55,7 @@ get_infousa_location <- function(single_year, loc, tract="*", columns="*", metho
     }
     tract_spec <- paste0("(\"CENSUS2010TRACT\"=", paste0(tract, collapse = " OR \"CENSUS2010TRACT\"="), ")")
   }
-  
+
   # Initialize list for return
   result <- list()
 
@@ -65,8 +65,8 @@ get_infousa_location <- function(single_year, loc, tract="*", columns="*", metho
                                 dbname = "infousa_2018",
                                 host = "141.142.209.139",
                                 port = 5432,
-                                user = "postgres",
-                                password = "bdeep")
+                                user = "infousa",
+                                password = "public")
 
   # Process state-county sequentially
   for(i in 1:nrow(state_county)){
@@ -145,7 +145,7 @@ get_infousa_multiyear <- function(startyear, endyear, loc, tract="*", columns="*
     return(NULL)
   }
   # state_county$county_code <- as.integer(state_county$county_code)
-  
+
   # Initialize tract specification
   if(length(tract)>1 || tract[1]!="*"){
     if(nrow(state_county) > 1){
@@ -160,9 +160,9 @@ get_infousa_multiyear <- function(startyear, endyear, loc, tract="*", columns="*
                                 dbname = "infousa_2018",
                                 host = "141.142.209.139",
                                 port = 5432,
-                                user = "postgres",
-                                password = "bdeep")
-  
+                                user = "infousa",
+                                password = "public")
+
   first <- TRUE
   # Iterate over years
   for(yr in startyear:endyear){
@@ -203,7 +203,7 @@ get_infousa_multiyear <- function(startyear, endyear, loc, tract="*", columns="*
       }
     }
   }
- 
+
   # close the connection
   RPostgreSQL::dbDisconnect(con)
   RPostgreSQL::dbUnloadDriver(drv)
@@ -234,16 +234,16 @@ get_infousa_zip <- function(startyear, endyear, zip, columns="*"){
     return(NULL)
   }
   sc_zip <- get_state_city_zipcode(zip)[, c("state", "zip", "city")]
-  
+
   # Initialize connection
   drv <- DBI::dbDriver("PostgreSQL")
   con <- RPostgreSQL::dbConnect(drv,
                                 dbname = "infousa_2018",
                                 host = "141.142.209.139",
                                 port = 5432,
-                                user = "postgres",
-                                password = "bdeep")
-  
+                                user = "infousa",
+                                password = "public")
+
   first <- TRUE
   # Iterate over years
   for(yr in startyear:endyear){
@@ -272,12 +272,12 @@ get_infousa_zip <- function(startyear, endyear, zip, columns="*"){
       }
     }
   }
-  
+
   # close the connection
   RPostgreSQL::dbDisconnect(con)
   RPostgreSQL::dbUnloadDriver(drv)
   print("Finished!")
-  
+
   return(res)
 }
 
@@ -297,7 +297,7 @@ get_infousa_fid <- function(startyear, endyear, fid, columns="*"){
     print("Invalid year range! Please ensure startyear <= endyear and both in [2006,2017].")
     return(NULL)
   }
-  
+
   # Create placeholder
   if (typeof(fid) == 'list'){
     # flatten list
@@ -305,15 +305,15 @@ get_infousa_fid <- function(startyear, endyear, fid, columns="*"){
   }
   fid <- as.numeric(fid)
   check <- rep(FALSE, length(fid))
-  
+
   # Initialize connection
   drv <- DBI::dbDriver("PostgreSQL")
   con <- RPostgreSQL::dbConnect(drv,
                                 dbname = "infousa_2018",
                                 host = "141.142.209.139",
                                 port = 5432,
-                                user = "postgres",
-                                password = "bdeep")
+                                user = "infousa",
+                                password = "public")
 
   first <- TRUE
   fid_spec <- paste0("(\"FAMILYID\" IN (", paste(fid, collapse = ","),"))")
@@ -338,13 +338,13 @@ get_infousa_fid <- function(startyear, endyear, fid, columns="*"){
       }
     }
   }
-  
+
   # close the connection
   RPostgreSQL::dbDisconnect(con)
   RPostgreSQL::dbUnloadDriver(drv)
 
   # Finished!
   print("Finished!")
-  
+
   return(res)
 }

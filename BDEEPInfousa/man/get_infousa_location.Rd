@@ -34,7 +34,7 @@ This function gets a data.frame including all data from the given location in a 
  # Using fips
  test <- get_infousa_location(2006, "01001")
  test <- get_infousa_location(2006, "02020", tract=c(001802,002900))
-  
+
  # Using state and county names
  x <- data.frame(state=c('il'), county=c('champaign'))
  test <- get_infousa_location(2017, x, method="names")
