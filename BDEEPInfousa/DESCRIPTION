@@ -1,6 +1,6 @@
 Package: BDEEPInfousa
 Title: R-PostgreSQL Connection for InfoUSA data @ BDEEP
-Version: 0.0.0.9991
+Version: 0.0.0.9992
 Authors@R: person("Yuchen", "Liang", email = "yliang35@illinois.edu", role = c("aut", "cre"))
 Description: This package builds up the connection between the PostgreSQL database and R for InfoUSA data.
 Depends: R (>= 3.0.0)

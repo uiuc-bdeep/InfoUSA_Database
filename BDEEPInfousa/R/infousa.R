@@ -65,8 +65,8 @@ get_infousa_location <- function(single_year, loc, tract="*", columns="*", metho
                                 dbname = "infousa_2018",
                                 host = "141.142.209.139",
                                 port = 5432,
-                                user = "infousa",
-                                password = "public")
+                                user = "postgres",
+                                password = "bdeep")
 
   # Process state-county sequentially
   for(i in 1:nrow(state_county)){
@@ -160,8 +160,8 @@ get_infousa_multiyear <- function(startyear, endyear, loc, tract="*", columns="*
                                 dbname = "infousa_2018",
                                 host = "141.142.209.139",
                                 port = 5432,
-                                user = "infousa",
-                                password = "public")
+                                user = "postgres",
+                                password = "bdeep")
 
   first <- TRUE
   # Iterate over years
@@ -241,8 +241,8 @@ get_infousa_zip <- function(startyear, endyear, zip, columns="*"){
                                 dbname = "infousa_2018",
                                 host = "141.142.209.139",
                                 port = 5432,
-                                user = "infousa",
-                                password = "public")
+                                user = "postgres",
+                                password = "bdeep")
 
   first <- TRUE
   # Iterate over years
@@ -312,8 +312,8 @@ get_infousa_fid <- function(startyear, endyear, fid, columns="*"){
                                 dbname = "infousa_2018",
                                 host = "141.142.209.139",
                                 port = 5432,
-                                user = "infousa",
-                                password = "public")
+                                user = "postgres",
+                                password = "bdeep")
 
   first <- TRUE
   fid_spec <- paste0("(\"FAMILYID\" IN (", paste(fid, collapse = ","),"))")
