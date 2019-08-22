@@ -348,3 +348,42 @@ get_infousa_fid <- function(startyear, endyear, fid, columns="*"){
 
   return(res)
 }
+
+
+#' get_infousa_usr
+#' @description This function gets from database according to a user-specified query.
+#' @param query         A string specifying the query sent to database
+#' @param database_name A string indicating the database name
+#' @param host_ip       A string indicating the ip address of the database VM
+#' @examples # Select single field from a given table
+#' @examples data <- get_infousa_usr("SELECT year2006part.total limit 50")
+#'
+#' @examples See similar function in BDEEPZillow package for details.
+#' @return A data.frame returned by the given query.
+#' @import RPostgreSQL DBI
+#' @export
+get_from_db_usr <- function(query, database_name="infousa_2018", host_ip="141.142.209.139"){
+  # Only one query at a time is supported
+  if(length(query)>1){
+    print("Only one query at a time is supported!")
+    return(NULL)
+  }
+  # Initialize connection
+  drv <- DBI::dbDriver("PostgreSQL")
+  con <- RPostgreSQL::dbConnect(drv,
+                                dbname = database_name,
+                                host = host_ip,
+                                port = 5432,
+                                user = "postgres",
+                                password = "bdeep")
+  # Get data
+  options(warn = -1)    # suppress warning messages
+  hedonics <- RPostgreSQL::dbGetQuery(con, query)
+  options(warn = 0)
+  gc()
+  # Close the connection
+  RPostgreSQL::dbDisconnect(con)
+  RPostgreSQL::dbUnloadDriver(drv)
+  return(db_type_converter(hedonics, dbname=database_name))
+}
+
