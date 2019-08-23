@@ -5,12 +5,12 @@ According to the [specification](./Cultural Coding datacard.doc), InfoUSA divide
 
 In this experiment, we randomly select 6 names from each of these 3 categories (by experience), and perform analysis on the consistency of prediction. The following graphs are based on a 1% sample of the entire InfoUSA dataset in year 2017.
 
-InfoUSA:
+### InfoUSA Race Prediction
 
 ![InfoUSA race prediction](./infousa.png)
 
 
-WRU package:
+### WRU Race Prediction
 
 ![WRU race prediction](./wru.png)
 
