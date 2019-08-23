@@ -111,4 +111,4 @@ This function is similar to other `get_*_usr` functions available in other BDEEP
 ```
 ## Notes
 ### Data Type
-Please refer to [this table](./InfoUSA Columns & Type Reference.xlsx) to check for InfoUSA data type compatibility for each column (missing fields from the original description also included).
+Please refer to [this table](./InfoUSA%20Columns%20&%20Type Reference.xlsx) to check for InfoUSA data type compatibility for each column (missing fields from the original description also included).
