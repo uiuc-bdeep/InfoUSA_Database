@@ -18,7 +18,7 @@ The script uses sqlalchemy ([Reference here](https://docs.sqlalchemy.org/en/13/)
 ## Postgres Database -> R
 To transfer data from database into rds files, we use the BDEEPInfousa R package.
 
-[This package](./BDEEPInfousa/) sets up a direct connection to the database and gets the data. The type reference table is also [available](./BDEEPInfousa/InfoUSA\ Columns\ &\ Type\ Reference.xlsx). Details in the package folder.
+[This package](./BDEEPInfousa/) sets up a direct connection to the database and gets the data. The type reference table is also [available](./BDEEPInfousa/InfoUSA%20Columns%20&%20Type%20Reference.xlsx). Details in the package folder.
 
 ## An Example using database: Race Prediction Analysis
-The InfoUSA data predicts the ethnicity of each of the recorded names and stores them as a separate column. The information is important for some researchers in the field of cultural differences and discrimination. [Here](./Race\ Prediction/), we analyzed the consistency of the InfoUSA prediction with that by another commonly used method, the [R WRU package](https://cran.r-project.org/web/packages/wru/wru.pdf). See the folder for more details.
+The InfoUSA data predicts the ethnicity of each of the recorded names and stores them as a separate column. The information is important for some researchers in the field of cultural differences and discrimination. [Here](./Race%20Prediction/), we analyzed the consistency of the InfoUSA prediction with that by another commonly used method, the [R WRU package](https://cran.r-project.org/web/packages/wru/wru.pdf). See the folder for more details.
