@@ -16,4 +16,4 @@ In this experiment, we randomly select 6 names from each of these 3 categories (
 
 ![WRU race prediction](./wru.png)
 
-For further information, check out `predict_race.R` for details.
+For further information, check out [`predict_race.R`](./predict_race.R) for details.
