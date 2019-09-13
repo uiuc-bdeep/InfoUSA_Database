@@ -53,7 +53,7 @@ get_infousa_location <- function(single_year, loc, tract="*", columns="*", metho
     if(nrow(state_county) > 1){
       print("WARNING: Tracts are unique only in one county!")
     }
-    tract_spec <- paste0("(\"CENSUS2010TRACT\"=", paste0(tract, collapse = " OR \"CENSUS2010TRACT\"="), ")")
+    tract_spec <- paste0("(\"GE_ALS_CENSUS_TRACT_2010\"=", paste0(tract, collapse = " OR \"GE_ALS_CENSUS_TRACT_2010\"="), ")")
   }
 
   # Initialize list for return
@@ -73,7 +73,7 @@ get_infousa_location <- function(single_year, loc, tract="*", columns="*", metho
     print(paste("Processing YEAR:", single_year,
                 "STATE:", toupper(state_county[i, 1]),
                 "COUNTY:", state_county[i, 2],
-                "CENSUS2010TRACT:", paste0(tract, collapse = ", ")))
+                "GE_ALS_CENSUS_TRACT_2010:", paste0(tract, collapse = ", ")))
     if(state_county[i, 3] == "000"){
       result[[i]] <- RPostgreSQL::dbGetQuery(con, paste0("SELECT ",
                                                            paste(columns, collapse = ","),
@@ -82,12 +82,12 @@ get_infousa_location <- function(single_year, loc, tract="*", columns="*", metho
       result[[i]] <- RPostgreSQL::dbGetQuery(con, paste0("SELECT ",
                                                            paste(columns, collapse = ","),
                                                            " FROM year", single_year, "part.", state_county[i, 1],
-                                                           " WHERE \"CENSUS2010COUNTYCODE\"=", state_county[i, 3]))
+                                                           " WHERE \"GE_ALS_COUNTY_CODE_2010\"=", state_county[i, 3]))
     } else {
       result[[i]] <- RPostgreSQL::dbGetQuery(con, paste0("SELECT ",
                                                            paste(columns, collapse = ","),
                                                            " FROM year", single_year, "part.", state_county[i, 1],
-                                                           " WHERE \"CENSUS2010COUNTYCODE\"=", state_county[i, 3],
+                                                           " WHERE \"GE_ALS_COUNTY_CODE_2010\"=", state_county[i, 3],
                                                            " AND ", tract_spec))
     }
     gc()
@@ -151,7 +151,7 @@ get_infousa_multiyear <- function(startyear, endyear, loc, tract="*", columns="*
     if(nrow(state_county) > 1){
       print("WARNING: Tracts are unique only in one county!")
     }
-    tract_spec <- paste0("(\"CENSUS2010TRACT\"=", paste0(tract, collapse = " OR \"CENSUS2010TRACT\"="), ")")
+    tract_spec <- paste0("(\"GE_ALS_CENSUS_TRACT_2010\"=", paste0(tract, collapse = " OR \"GE_ALS_CENSUS_TRACT_2010\"="), ")")
   }
 
   # Initialize connection
@@ -171,7 +171,7 @@ get_infousa_multiyear <- function(startyear, endyear, loc, tract="*", columns="*
       print(paste("Processing YEAR:", yr,
                   "STATE:", toupper(state_county[i, 1]),
                   "COUNTY:", state_county[i, 2],
-                  "CENSUS2010TRACT:", paste0(tract, collapse = ", ")))
+                  "GE_ALS_CENSUS_TRACT_2010:", paste0(tract, collapse = ", ")))
       if(state_county[i, 3] == "000"){
         res_oneyear <- RPostgreSQL::dbGetQuery(con, paste0("SELECT ",
                                                                 paste(columns, collapse = ","),
@@ -180,12 +180,12 @@ get_infousa_multiyear <- function(startyear, endyear, loc, tract="*", columns="*
         res_oneyear <- RPostgreSQL::dbGetQuery(con, paste0("SELECT ",
                                                            paste(columns, collapse = ","),
                                                            " FROM year", yr, "part.", state_county[i, 1],
-                                                           " WHERE \"CENSUS2010COUNTYCODE\"=", state_county[i, 3]))
+                                                           " WHERE \"GE_ALS_COUNTY_CODE_2010\"=", state_county[i, 3]))
       } else {
         res_oneyear <- RPostgreSQL::dbGetQuery(con, paste0("SELECT ",
                                                            paste(columns, collapse = ","),
                                                            " FROM year", yr, "part.", state_county[i, 1],
-                                                           " WHERE \"CENSUS2010COUNTYCODE\"=", state_county[i, 3],
+                                                           " WHERE \"GE_ALS_COUNTY_CODE_2010\"=", state_county[i, 3],
                                                            " AND ", tract_spec))
       }
       if(nrow(res_oneyear)>0){
@@ -386,4 +386,3 @@ get_from_db_usr <- function(query, database_name="infousa_2018", host_ip="141.14
   RPostgreSQL::dbUnloadDriver(drv)
   return(db_type_converter(hedonics, dbname=database_name))
 }
-
