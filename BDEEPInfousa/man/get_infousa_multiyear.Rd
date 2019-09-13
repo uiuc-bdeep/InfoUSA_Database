@@ -4,8 +4,8 @@
 \alias{get_infousa_multiyear}
 \title{get_infousa_multiyear}
 \usage{
-get_infousa_multiyear(startyear, endyear, loc, tract = "*", columns = "*",
-  method = "fips")
+get_infousa_multiyear(startyear, endyear, loc, tract = "*",
+  columns = "*", method = "fips")
 }
 \arguments{
 \item{startyear}{The first year to get data}
