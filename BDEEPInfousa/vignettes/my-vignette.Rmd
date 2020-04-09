@@ -1,0 +1,131 @@
+---
+title: "my-vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{my-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(BDEEPInfousa)
+```
+
+get_infousa_location
+
+This function gets a data.frame including all data from the given location in a single year.
+
+Parameter:
+    
+    single_year   An integer indicating a single year
+    
+    loc           A vector of integers indicating fips ("fips" method) or a data.frame with first 2 columns being state abbr. & county name ("names" method).If the entire state is needed, set county code to 000 ("fips") or set county name to "*" ("names").
+    
+    tract         A vector of integers or chars indicating tract in the county. Note that tracts are unique only in the current county. Default to all tracts.
+    
+    columns       A vector of column names to export. Default to all columns (i.e. "*").
+    
+    method        Method for input. Choose between "fips" and "names". Default to "fips".
+    
+    append        If append is true, return a single data.frame with rows appended, otherwise a
+                     list of data.frames from each state.
+
+```{r}
+data <- get_infousa_location(2006, "01001")
+head(data, n = 5L)
+test <- get_infousa_location(2006, "02020", tract=c(001802,002900))
+head(data, n = 5L)
+
+x <- data.frame(state=c('il'), county=c('champaign'))
+data <- get_infousa_location(2017, x, method="names")
+head(data, n = 5L)
+```
+
+
+get_infousa_multiyear
+
+This function gets a data.frame including all data from the given location from all years.
+
+Parameter:
+
+    startyear     The first year to get data
+    
+    endyear       The last year to get data
+    loc           A vector of integers indicating fips ("fips" method) or a data.frame with first 2 columns being state abbr. & county name ("names" method).If the entire state is needed, set county code to 000 ("fips") or set county name to "*" ("names").
+    
+    tract         A vector of integers or chars indicating tract in the county. Note that tracts are unique only in the current county. Default to all tracts.
+
+    columns       A vector of column names to export. Default to all columns (i.e. "*").
+
+    method        Method for input. Choose between "fips" and "names". Default to "fips".
+    
+```{r}
+data <- get_infousa_multiyear(2017, 2017, "01001")
+head(data, n = 5L)
+data <- get_infousa_multiyear(2006, 2016, "02020", tract=c(001802,002900))
+head(data, n = 5L)
+```
+
+get_infousa_zip
+
+This function gets a data.frame including all data from the given location from all years.
+
+Parameter:
+
+    startyear     The first year to get data
+
+    endyear       The last year to get data
+
+    zip           A vector of characters indicating zipcodes to get data from.
+
+    columns       A vector of column names to export. Default to all columns (i.e. "*").
+
+```{r}
+data <- get_infousa_zip(2016, 2017, c("61801", "61820"))
+head(data, n = 5L)
+```
+
+get_infousa_fid
+
+This function gets a data.frame including all data from the given vector of familyid from given years.
+
+Parameter:
+
+    startyear     The first year to get data
+    
+    endyear       The last year to get data
+    
+    fid           A vector of characters indicating familyids to get data from.
+    
+    columns       A vector of column names to export. Default to all columns (i.e. "*").
+    
+```{r}
+data <- get_infousa_fid(2006, 2007, c("54299524", "54320129"))
+head(data, n = 5L)
+```
+
+get_infousa_usr 
+
+This function gets from database according to a user-specified query.
+
+Parameter:
+
+    query         A string specifying the query sent to database
+    
+    database_name A string indicating the database name
+    
+    host_ip       A string indicating the ip address of the database VM
+    
+```{r}
+# Select single field from a given table
+data <- get_infousa_usr("SELECT year2006part.total limit 50")
+head(data, n = 5L)
+```
+
